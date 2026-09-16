@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grammar M.4 Smart Learning Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Noto+Sans+Thai:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#0f172a; --navy2:#1e293b; --purple:#7c3aed; --blue:#2563eb;
+  --sky:#38bdf8; --green:#16a34a; --red:#dc2626; --amber:#f59e0b;
+  --bg:#f1f5f9; --card:#ffffff; --line:#e2e8f0; --muted:#64748b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Poppins','Noto Sans Thai',sans-serif;
+  background:var(--bg); color:var(--navy); line-height:1.7;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:900px;margin:0 auto;padding:16px}
+.screen{display:none;animation:fade .3s ease}
+.screen.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* HEADER */
+.hero{
+  background:linear-gradient(135deg,#0f172a 0%,#4c1d95 55%,#2563eb 100%);
+  color:#fff;border-radius:24px;padding:38px 26px;text-align:center;margin-top:16px;
+  box-shadow:0 18px 40px rgba(76,29,149,.25);
+}
+.hero h1{font-size:30px;font-weight:700;letter-spacing:.3px}
+.hero .sub{opacity:.9;font-size:15px;margin-top:6px}
+.hero .tag{display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);
+  padding:5px 14px;border-radius:999px;font-size:13px;margin-top:14px}
+.statrow{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
+.stat{background:rgba(255,255,255,.12);border-radius:14px;padding:10px 16px;min-width:110px}
+.stat b{display:block;font-size:20px}
+.stat span{font-size:12px;opacity:.85}
+
+/* CARD */
+.card{background:var(--card);border-radius:18px;padding:22px;margin-top:16px;
+  box-shadow:0 4px 16px rgba(15,23,42,.06);border:1px solid var(--line)}
+.card h2{font-size:20px;margin-bottom:6px}
+.card h3{font-size:16px;margin:14px 0 6px;color:var(--purple)}
+.lead{color:var(--muted);font-size:14px}
+
+/* FORM */
+label{display:block;font-size:14px;font-weight:600;margin:12px 0 6px}
+input,select{width:100%;padding:13px 14px;border:2px solid var(--line);border-radius:12px;
+  font-family:inherit;font-size:16px;background:#fff}
+input:focus,select:focus{outline:none;border-color:var(--purple)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:560px){.grid2{grid-template-columns:1fr}}
+
+/* BUTTON */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 22px;border:none;border-radius:14px;font-family:inherit;font-size:16px;
+  font-weight:600;cursor:pointer;transition:.18s;width:100%;margin-top:16px}
+.btn:hover{transform:translateY(-2px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;
+  box-shadow:0 8px 20px rgba(124,58,237,.3)}
+.btn-ghost{background:#fff;color:var(--purple);border:2px solid var(--purple)}
+.btn-dark{background:var(--navy);color:#fff}
+.btn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.btn-sm{padding:10px 14px;font-size:14px;margin-top:10px}
+
+/* UNIT LIST */
+.unit{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);
+  border-radius:16px;padding:16px;margin-top:12px;cursor:pointer;transition:.18s}
+.unit:hover{border-color:var(--purple);transform:translateX(4px);box-shadow:0 6px 18px rgba(124,58,237,.12)}
+.unum{width:52px;height:52px;flex:none;border-radius:14px;display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--purple),var(--blue));color:#fff;font-weight:700;font-size:13px;line-height:1.2;text-align:center}
+.utext b{display:block;font-size:16px}
+.utext span{font-size:13px;color:var(--muted)}
+
+/* LESSON BLOCKS */
+.blk{border-radius:14px;padding:16px;margin-top:12px;border-left:5px solid}
+.blk p{margin:4px 0}
+.b-goal{background:#eef2ff;border-color:#6366f1}
+.b-idea{background:#f5f3ff;border-color:#7c3aed}
+.b-form{background:#ecfeff;border-color:#06b6d4}
+.b-ex{background:#f0fdf4;border-color:#16a34a}
+.b-sig{background:#fffbeb;border-color:#f59e0b}
+.b-warn{background:#fef2f2;border-color:#dc2626}
+.b-mem{background:#fdf2f8;border-color:#db2777}
+.blk .t{font-weight:700;font-size:14px;margin-bottom:6px;display:block}
+code{background:#0f172a;color:#a5f3fc;padding:3px 9px;border-radius:7px;
+  font-family:ui-monospace,Menlo,monospace;font-size:14px;display:inline-block;margin:3px 0}
+.ok{color:var(--green);font-weight:600}
+.no{color:var(--red);font-weight:600;text-decoration:line-through}
+.tl{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:14px;margin-top:10px;
+  font-family:ui-monospace,monospace;font-size:13px;white-space:pre;overflow-x:auto}
+
+/* QUIZ */
+.qbar{position:sticky;top:0;z-index:10;background:rgba(241,245,249,.95);
+  backdrop-filter:blur(8px);padding:12px 0;margin-top:8px}
+.qmeta{display:flex;justify-content:space-between;font-size:14px;font-weight:600;margin-bottom:8px}
+.pbar{height:10px;background:var(--line);border-radius:99px;overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--purple),var(--sky));
+  border-radius:99px;transition:width .3s;width:0}
+.qtext{font-size:19px;font-weight:600;margin:6px 0 14px;line-height:1.6}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:#fff;
+  border:2px solid var(--line);border-radius:14px;padding:14px 16px;margin-top:10px;
+  font-family:inherit;font-size:16px;cursor:pointer;transition:.15s;color:var(--navy)}
+.opt:hover{border-color:var(--purple);background:#faf5ff}
+.opt .k{width:30px;height:30px;flex:none;border-radius:9px;background:var(--bg);
+  display:grid;place-items:center;font-weight:700;font-size:14px}
+.opt.sel{border-color:var(--purple);background:#f5f3ff}
+.opt.sel .k{background:var(--purple);color:#fff}
+
+/* RESULT */
+.score{text-align:center;padding:26px;border-radius:20px;color:#fff;
+  background:linear-gradient(135deg,var(--purple),var(--blue))}
+.score.fail{background:linear-gradient(135deg,#be123c,#f59e0b)}
+.score .big{font-size:52px;font-weight:700;line-height:1.1}
+.score .pct{font-size:20px;opacity:.95}
+.badge{display:inline-block;padding:7px 20px;border-radius:99px;background:rgba(255,255,255,.2);
+  border:1px solid rgba(255,255,255,.4);font-weight:600;margin-top:12px}
+.idcard{background:#0f172a;color:#fff;border-radius:16px;padding:18px;margin-top:16px}
+.idcard div{display:flex;justify-content:space-between;padding:5px 0;font-size:15px;
+  border-bottom:1px solid rgba(255,255,255,.1)}
+.idcard div:last-child{border:none}
+.idcard span:first-child{opacity:.7}
+table{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px}
+th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--line)}
+th{background:var(--bg);font-size:13px;color:var(--muted)}
+.mini{height:8px;background:var(--line);border-radius:99px;overflow:hidden;min-width:70px}
+.mini i{display:block;height:100%;border-radius:99px}
+.rev{border-radius:14px;padding:14px;margin-top:12px;border-left:5px solid var(--red);background:#fef2f2}
+.rev .q{font-weight:600;margin-bottom:8px}
+.rev .a{font-size:14px;margin:3px 0}
+.pill{display:inline-block;font-size:12px;padding:2px 10px;border-radius:99px;
+  background:#e0e7ff;color:#3730a3;font-weight:600;margin-bottom:6px}
+.foot{text-align:center;color:var(--muted);font-size:13px;padding:26px 0}
+@media print{.btn,.qbar,.noprint{display:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ═══════ HOME ═══════ -->
+<section id="s-home" class="screen active">
+  <div class="hero">
+    <h1>🎓 Grammar M.4</h1>
+    <div style="font-size:19px;font-weight:600">Smart Learning Lab</div>
+    <div class="sub">Learn Grammar. Remember Better. Practice Smarter.</div>
+    <div class="tag">มัธยมศึกษาปีที่ 4 · English Grammar</div>
+    <div class="statrow">
+      <div class="stat"><b>6</b><span>Units</span></div>
+      <div class="stat"><b>90</b><span>คลังข้อสอบ</span></div>
+      <div class="stat"><b>30</b><span>ข้อ / รอบ</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>👤 ลงทะเบียนก่อนเริ่ม</h2>
+    <p class="lead">กรอกข้อมูลให้ครบ เพื่อให้ระบบออกใบสรุปผลคะแนนของนักเรียน</p>
+    <label>ชื่อ–นามสกุล</label>
+    <input id="i-name" placeholder="เช่น สมชาย ใจดี" autocomplete="name">
+    <div class="grid2">
+      <div>
+        <label>ชั้น</label>
+        <select id="i-class">
+          <option value="">— เลือกชั้น —</option>
+          <option>M.4/1</option><option>M.4/2</option><option>M.4/3</option>
+          <option>M.4/4</option><option>M.4/5</option><option>M.4/6</option>
+          <option>M.4/7</option><option>M.4/8</option>
+        </select>
+      </div>
+      <div>
+        <label>เลขที่</label>
+        <input id="i-no" type="number" min="1" max="60" placeholder="เช่น 12" inputmode="numeric">
+      </div>
+    </div>
+    <div id="err" style="color:var(--red);font-size:14px;margin-top:10px;display:none"></div>
+    <button class="btn btn-primary" onclick="enter()">🚀 เข้าสู่บทเรียน</button>
+  </div>
+  <div class="foot">Learn → Remember → Practice → Test → Improve</div>
+</section>
+
+<!-- ═══════ MENU ═══════ -->
+<section id="s-menu" class="screen">
+  <div class="card" style="margin-top:20px">
+    <h2 id="hi"></h2>
+    <p class="lead">เลือกอ่านบทเรียนทีละ Unit ก่อน แล้วค่อยทำแบบทดสอบท้ายบท</p>
+  </div>
+  <div class="card">
+    <h2>📚 บทเรียนสรุป 6 Units</h2>
+    <div id="units"></div>
+  </div>
+  <div class="card" style="background:linear-gradient(135deg,#0f172a,#4c1d95);color:#fff;border:none">
+    <h2>📝 Final Post-test</h2>
+    <p style="opacity:.9;font-size:14px;margin-top:6px">
+      30 ข้อ ครอบคลุมทั้ง 6 Units · สุ่มข้อสอบและสลับตัวเลือกใหม่ทุกครั้ง<br>
+      เกณฑ์ผ่าน 70% (21 ข้อขึ้นไป)
+    </p>
+    <button class="btn btn-primary" onclick="startTest()">เริ่มทำแบบทดสอบ</button>
+  </div>
+  <div class="foot noprint">
+    <button class="btn btn-ghost btn-sm" style="max-width:240px" onclick="go('s-home')">← เปลี่ยนข้อมูลผู้เรียน</button>
+  </div>
+</section>
+
+<!-- ═══════ LESSON ═══════ -->
+<section id="s-lesson" class="screen">
+  <div id="lesson-body"></div>
+  <div class="btn-row noprint" style="margin-bottom:30px">
+    <button class="btn btn-ghost" onclick="go('s-menu')">← กลับหน้าหลัก</button>
+    <button class="btn btn-primary" id="nextUnit"></button>
+  </div>
+</section>
+
+<!-- ═══════ TEST ═══════ -->
+<section id="s-test" class="screen">
+  <div class="qbar">
+    <div class="qmeta"><span id="qnum"></span><span id="qpct"></span></div>
+    <div class="pbar"><i class="pfill" id="pfill"></i></div>
+  </div>
+  <div class="card">
+    <span class="pill" id="qunit"></span>
+    <div class="qtext" id="qtext"></div>
+    <div id="qopts"></div>
+  </div>
+  <div class="btn-row">
+    <button class="btn btn-ghost" id="bPrev" onclick="prevQ()">← ข้อก่อนหน้า</button>
+    <button class="btn btn-primary" id="bNext" onclick="nextQ()">ข้อถัดไป →</button>
+  </div>
+  <div class="foot noprint">
+    <button class="btn btn-ghost btn-sm" style="max-width:200px" onclick="quitTest()">ออกจากแบบทดสอบ</button>
+  </div>
+</section>
+
+<!-- ═══════ RESULT ═══════ -->
+<section id="s-result" class="screen">
+  <div id="result-body"></div>
+</section>
+
+</div>
+
+<script>
+/* ═══════════════════════ LESSON DATA ═══════════════════════ */
+const LESSONS={
+1:{t:"Present Time",s:"Present Simple · Present Continuous · Stative Verbs",
+ goal:"บอกความแตกต่างระหว่าง “สิ่งที่ทำประจำ” กับ “สิ่งที่กำลังทำอยู่ตอนนี้” ได้",
+ parts:[
+  {h:"A. Present Simple",idea:"ทำเป็นกิจวัตร · เป็นความจริง · เป็นนิสัย",
+   form:["I / You / We / They + <b>V1</b>","He / She / It + <b>V-s / V-es</b>","Neg: don't / doesn't + V1","Q: Do / Does + S + V1 ?"],
+   ex:["I <b>play</b> football every Sunday.","She <b>plays</b> the piano very well.","Water <b>boils</b> at 100°C."],
+   sig:"always · usually · often · sometimes · rarely · never · every day/week · twice a month",
+   warn:["She <span class='no'>play</span> tennis. → She <span class='ok'>plays</span> tennis.","<span class='no'>Do</span> he like it? → <span class='ok'>Does</span> he like it?","He doesn't <span class='no'>likes</span> it. → doesn't <span class='ok'>like</span>"],
+   mem:"<b>HE / SHE / IT → เติม S</b><br>“สามคนนี้เติม S”<br>แต่พอมี do/does นำหน้า → S หายทันที"},
+  {h:"B. Present Continuous",idea:"กำลังทำอยู่ตอนนี้ · ชั่วคราว · นิสัยน่ารำคาญ (always)",
+   form:["am / is / are + <b>V-ing</b>","Neg: am not / isn't / aren't + V-ing","Q: Am / Is / Are + S + V-ing ?"],
+   ex:["Listen! The baby <b>is crying</b>.","I <b>'m staying</b> with my aunt this week.","He <b>is always borrowing</b> my things!"],
+   sig:"now · right now · at the moment · today · this week/month · Look! · Listen!",
+   warn:["I <span class='no'>am go</span> now. → I <span class='ok'>am going</span> now.","She <span class='no'>is play</span>. → She <span class='ok'>is playing</span>."],
+   mem:"เห็น <b>now / at the moment / Look!</b> → นึกถึง <b>-ing</b> ทันที"},
+  {h:"C. Stative Verbs",idea:"กริยาบอก “สภาวะ” ไม่ใช่การกระทำ → ปกติไม่เติม -ing",
+   form:["appear · be · believe · belong · hate · have · include","know · like · love · need · prefer · see · seem","taste · think · understand · want"],
+   ex:["I <b>like</b> this song. <span class='no'>I am liking</span>","This soup <b>tastes</b> great.","It <b>belongs</b> to me."],
+   sig:"ถ้าเป็น “ความรู้สึก / ความคิด / ความเป็นเจ้าของ / ประสาทสัมผัส” → ใช้ Simple",
+   warn:["<span class='no'>I am knowing</span> → <span class='ok'>I know</span>","<span class='no'>I am wanting</span> → <span class='ok'>I want</span>"],
+   mem:"บางตัวใช้ได้ทั้งคู่ แต่<b>ความหมายเปลี่ยน</b><br>I <b>think</b> you're right. = คิดเห็น<br>I <b>'m thinking</b> about it. = กำลังครุ่นคิด<br>I <b>have</b> a car = มี / I <b>'m having</b> lunch = กำลังกิน"}],
+ tl:"PRESENT SIMPLE\n  ●   ●   ●   ●   ●   →  ทำซ้ำเรื่อยๆ\n PAST ──────── NOW ──────── FUTURE\n\nPRESENT CONTINUOUS\n          ╔═══╗\n PAST ────╢NOW╟──── FUTURE   กำลังทำอยู่"},
+
+2:{t:"Past Time",s:"Past Simple · Past Continuous · used to",
+ goal:"เล่าเหตุการณ์ในอดีต และแยกได้ว่าเหตุการณ์ไหนเป็นฉากหลัง เหตุการณ์ไหนมาแทรก",
+ parts:[
+  {h:"A. Past Simple",idea:"จบไปแล้วในอดีต · รู้เวลาชัดเจน",
+   form:["S + <b>V2</b>","Neg: <b>didn't</b> + V1","Q: <b>Did</b> + S + V1 ?"],
+   ex:["I <b>saw</b> the film yesterday.","We <b>didn't go</b> to school last Monday.","<b>Did</b> you <b>finish</b> your homework?"],
+   sig:"yesterday · last night/week/year · ... ago · in 2020 · when I was young",
+   warn:["I <span class='no'>didn't went</span> → I <span class='ok'>didn't go</span>","<span class='no'>Did you saw</span> → <span class='ok'>Did you see</span>"],
+   mem:"มี <b>did</b> แล้ว → กริยากลับเป็น <b>V1</b> เสมอ (did กินช่อง 2 ไปแล้ว)"},
+  {h:"B. Past Continuous",idea:"กำลังทำอยู่ ณ จุดหนึ่งในอดีต · เป็นฉากหลังของเรื่อง",
+   form:["was / were + <b>V-ing</b>","I / he / she / it → <b>was</b>","you / we / they → <b>were</b>"],
+   ex:["At 8 pm last night I <b>was watching</b> TV.","I <b>was cooking</b> <u>when</u> the phone <b>rang</b>.","It <b>was raining</b>, so we stayed home."],
+   sig:"at that moment · at 8 o'clock · while · when · all evening",
+   warn:["Last year I <span class='no'>was going</span> to the gym every week.<br>→ ทำซ้ำ ๆ ต้องใช้ <span class='ok'>went</span>"],
+   mem:"<b>สูตรทอง:</b> while + <b>V-ing</b> (ฉากยาว) … when + <b>V2</b> (เหตุแทรกสั้น)<br>ฉากยาว = -ing / เหตุแทรก = V2"},
+  {h:"C. used to",idea:"เคยทำ / เคยเป็น ในอดีต แต่ตอนนี้ไม่แล้ว",
+   form:["<b>used to</b> + V1","Neg: <b>didn't use to</b> + V1","Q: <b>Did</b> + S + <b>use to</b> + V1 ?"],
+   ex:["I <b>used to</b> eat ice cream every day.","She <b>didn't use to</b> like coffee.","<b>Did</b> you <b>use to</b> live here?"],
+   sig:"when I was young · in the past · years ago",
+   warn:["<span class='no'>didn't used to</span> → <span class='ok'>didn't use to</span>","<span class='no'>Did you used to</span> → <span class='ok'>Did you use to</span>"],
+   mem:"รูปปฏิเสธ/คำถามมี <b>did</b> อยู่แล้ว → ตัด <b>d</b> ท้าย used ทิ้ง"}],
+ tl:"PAST CONTINUOUS + PAST SIMPLE\n\n ════════════╪════════════►  I was cooking\n             ↑\n         the phone rang  (V2 แทรก)"},
+
+4:{t:"Present Perfect",s:"Present Perfect Simple · Present Perfect Continuous",
+ goal:"เชื่อมอดีตกับปัจจุบัน และแยกได้ว่าเมื่อไรใช้ Present Perfect เมื่อไรใช้ Past Simple",
+ parts:[
+  {h:"A. Present Perfect Simple",idea:"เกิดในอดีต แต่<b>ผลยังอยู่ถึงตอนนี้</b> · ประสบการณ์ · ยังไม่ระบุเวลา",
+   form:["have / has + <b>V3</b>","Neg: haven't / hasn't + V3","Q: Have / Has + S + V3 ?"],
+   ex:["I <b>have finished</b> my homework. (เสร็จแล้ว → ตอนนี้ว่าง)","She <b>has lived</b> here <b>since</b> 2019.","<b>Have</b> you <b>ever been</b> to Japan?"],
+   sig:"for · since · just · already · yet · ever · never · so far · It's the first time",
+   warn:["<span class='no'>I have seen him yesterday.</span><br>→ <span class='ok'>I saw him yesterday.</span> (มีเวลาอดีตชัด = Past Simple)"],
+   mem:"<b>for</b> + ช่วงเวลา (for 3 years)<br><b>since</b> + จุดเริ่ม (since 2019)<br><b>กฎเหล็ก:</b> yesterday / last / ago → ห้ามใช้ Present Perfect"},
+  {h:"B. Present Perfect Continuous",idea:"เน้น<b>ระยะเวลา</b>และ<b>ตัวกิจกรรม</b> ที่ทำต่อเนื่องมาจนถึงตอนนี้",
+   form:["have / has + <b>been</b> + <b>V-ing</b>"],
+   ex:["I <b>have been waiting</b> for two hours!","It <b>has been raining</b> all day.","My hands are dirty — I <b>'ve been washing</b> the car."],
+   sig:"for · since · all day/morning · How long ...? · lately · recently",
+   warn:["Stative verbs ไม่ใช้รูปนี้: <span class='no'>I've been knowing him</span> → <span class='ok'>I've known him</span>"],
+   mem:"<b>Simple = ผลลัพธ์ 🏁</b> I've cleaned my room. (สะอาดแล้ว)<br><b>Continuous = กระบวนการ ⏳</b> I've been cleaning for 2 hours. (เหนื่อย/ยังไม่เสร็จ)"}],
+ tl:"PRESENT PERFECT\n PAST ─────────────────► NOW\n   ↑                      │\n started            ผลยังอยู่ / ยังทำอยู่"},
+
+5:{t:"Past Perfect",s:"Past Perfect Simple · Past Perfect Continuous",
+ goal:"เรียงลำดับเหตุการณ์ 2 เหตุการณ์ในอดีตได้ว่าอะไรเกิดก่อน–หลัง",
+ parts:[
+  {h:"A. Past Perfect Simple",idea:"อดีตซ้อนอดีต — เกิด<b>ก่อน</b>อีกเหตุการณ์หนึ่งในอดีต",
+   form:["<b>had</b> + V3 (ใช้ had ทุกประธาน)","Neg: hadn't + V3","Q: Had + S + V3 ?"],
+   ex:["When I <b>arrived</b>, the train <b>had left</b>.","By the time we got there, the film <b>had started</b>.","I didn't eat — I <b>had</b> already <b>eaten</b> at home."],
+   sig:"by · by the time · before · after · already · just · when · never ... before",
+   warn:["ถ้าเหตุการณ์เกิด<b>เรียงตามลำดับปกติ</b> ใช้ Past Simple ธรรมดาก็พอ<br>I got up and <span class='ok'>had</span> breakfast."],
+   mem:"เหตุการณ์ที่<b>เกิดก่อน = had + V3</b><br>เหตุการณ์ที่<b>เกิดทีหลัง = V2</b><br>👉 “เก่ากว่า ใส่ had”"},
+  {h:"B. Past Perfect Continuous",idea:"เน้น<b>ระยะเวลา</b>ของกิจกรรมที่ทำต่อเนื่องก่อนจุดหนึ่งในอดีต",
+   form:["<b>had been</b> + <b>V-ing</b>"],
+   ex:["She was tired because she <b>had been working</b> all day.","The ground was wet — it <b>had been raining</b>.","They <b>had been waiting</b> for over an hour."],
+   sig:"for · since · all day/night · before · How long ...?",
+   warn:["<span class='no'>had being working</span> → <span class='ok'>had been working</span>"],
+   mem:"เจอประโยคแบบ <b>“X เป็นแบบนั้น เพราะก่อนหน้านี้ทำ Y มานาน”</b><br>→ had been + V-ing แทบทุกครั้ง"}],
+ tl:"PAST PERFECT\n Earlier Past ──────► Later Past ──────► NOW\n      ↑                    ↑\n  had + V3               V2"},
+
+7:{t:"Future Time",s:"will · be going to · Present Continuous · Present Simple",
+ goal:"เลือกรูปอนาคตให้ถูกกับสถานการณ์ — ตัดสินใจตอนนี้ / วางแผนไว้แล้ว / นัดไว้ / ตารางเวลา",
+ parts:[
+  {h:"A. will",idea:"ตัดสินใจ<b>เดี๋ยวนั้น</b> · ทำนาย · เสนอตัวช่วย · ขอร้อง · สัญญา",
+   form:["will + <b>V1</b>  ·  won't + V1","Q: Will + S + V1 ?  /  Shall I ...?"],
+   ex:["That bag looks heavy — I <b>'ll help</b> you. (ตัดสินใจทันที)","I think our team <b>will win</b>.","<b>Will</b> you pass me the salt, please?"],
+   sig:"I think · I'm sure · probably · maybe · in 2050 · one day",
+   warn:["<span class='no'>will to go</span> → <span class='ok'>will go</span>","<span class='no'>He will goes</span> → <span class='ok'>He will go</span>"],
+   mem:"<b>will = ตัดสินใจ ณ วินาทีที่พูด</b> (ไม่ได้เตรียมมาก่อน)"},
+  {h:"B. be going to",idea:"<b>ตั้งใจไว้ก่อนแล้ว</b> · หรือทำนายจาก<b>หลักฐานที่เห็น</b>",
+   form:["am / is / are + <b>going to</b> + V1"],
+   ex:["I <b>'m going to study</b> medicine. (ตัดสินใจไว้นานแล้ว)","Look at those clouds! It <b>'s going to rain</b>.","She <b>'s going to buy</b> a new phone next month."],
+   sig:"next week/month · tonight · soon · Look! (มีหลักฐาน)",
+   warn:["<span class='no'>going to studies</span> → <span class='ok'>going to study</span>"],
+   mem:"เห็น<b>หลักฐานตรงหน้า</b> → going to<br>เห็นเมฆดำ ☁️ → It's going to rain."},
+  {h:"C. Present Continuous & Present Simple",idea:"นัดหมายที่ตกลงกันแล้ว · ตารางเวลาที่ตายตัว",
+   form:["<b>Arrangement</b> → am/is/are + V-ing","<b>Timetable</b> → V1 / V-s"],
+   ex:["I <b>'m meeting</b> my teacher at 3 pm tomorrow. (นัดแล้ว)","The train <b>leaves</b> at 7:00.","The film <b>starts</b> at 8 pm."],
+   sig:"tomorrow · next Monday · at 3 o'clock · this evening",
+   warn:["ตารางรถไฟ/หนัง/เครื่องบิน → ใช้ <b>Present Simple</b> ไม่ใช่ will"],
+   mem:"<b>สรุป 4 แบบ</b><br>will = ตัดสินใจเดี๋ยวนี้<br>going to = ตั้งใจไว้ / มีหลักฐาน<br>-ing = นัดหมายส่วนตัว<br>V1 = ตารางเวลาทางการ"}],
+ tl:"เลือกยังไง?\n มีตารางเวลาทางการ?  → Present Simple\n นัดกับคนอื่นไว้แล้ว?  → am/is/are + V-ing\n ตั้งใจไว้ / เห็นหลักฐาน? → be going to\n เพิ่งคิดได้ตอนนี้?     → will"},
+
+8:{t:"Prepositions of Time & Place",s:"in · on · at · to",
+ goal:"ใช้ in / on / at / to กับเวลาและสถานที่ได้ถูกต้อง",
+ parts:[
+  {h:"A. IN — ใหญ่ / ข้างใน",idea:"หน่วยเวลาที่ยาว และพื้นที่ที่มีขอบเขต",
+   form:["<b>เวลา:</b> เดือน · ปี · ฤดู · ช่วงของวัน · ศตวรรษ","<b>สถานที่:</b> ประเทศ · เมือง · ทวีป · ในห้อง/อาคาร"],
+   ex:["<b>in</b> July · <b>in</b> 2026 · <b>in</b> winter","<b>in</b> the morning / afternoon / evening","<b>in</b> Thailand · <b>in</b> Bangkok · <b>in</b> the kitchen"],
+   sig:"ยิ่งหน่วยใหญ่ ยิ่งใช้ in",
+   warn:["<span class='no'>in the night</span> → <span class='ok'>at night</span>","<span class='no'>in Monday</span> → <span class='ok'>on Monday</span>"],
+   mem:"<b>IN = กล่องใหญ่ 📦</b> อยู่ข้างในบางอย่าง"},
+  {h:"B. ON — วัน / พื้นผิว",idea:"วันที่เจาะจง และสิ่งที่วางอยู่บนพื้นผิว",
+   form:["<b>เวลา:</b> วัน · วันที่ · วันพิเศษ","<b>สถานที่:</b> พื้นผิว · หน้าหนังสือ · เกาะ · ถนน"],
+   ex:["<b>on</b> Monday · <b>on</b> 12 June · <b>on</b> Christmas Day","<b>on</b> Monday morning (มีวันนำหน้า → on)","<b>on</b> the table · <b>on</b> page 62 · <b>on</b> an island"],
+   sig:"เห็นชื่อวัน หรือวันที่ → on เกือบ 100%",
+   warn:["<span class='no'>in Monday morning</span> → <span class='ok'>on Monday morning</span>"],
+   mem:"<b>ON = วางบนผิว 📄</b> และ “มีวัน = ใช้ on”"},
+  {h:"C. AT — จุดเจาะจง",idea:"เวลาแบบเป๊ะ ๆ และจุดใดจุดหนึ่ง",
+   form:["<b>เวลา:</b> เวลานาฬิกา · noon · night · เทศกาล","<b>สถานที่:</b> จุดนัดพบ · บ้านเลขที่ · สถานี"],
+   ex:["<b>at</b> 7:00 · <b>at</b> noon · <b>at</b> night · <b>at</b> the weekend","<b>at</b> Christmas (ช่วงเทศกาล) vs <b>on</b> Christmas Day (วันนั้น)","<b>at</b> the bus stop · <b>at</b> 25 Main Street · <b>at</b> home"],
+   sig:"เวลาที่เป็นตัวเลขนาฬิกา → at",
+   warn:["<span class='no'>in 7 o'clock</span> → <span class='ok'>at 7 o'clock</span>"],
+   mem:"<b>AT = จุดเข็มหมุด 📍</b> เจาะจงที่สุด"},
+  {h:"D. TO — การเคลื่อนที่",idea:"เคลื่อนที่ไปยังที่ใดที่หนึ่ง",
+   form:["go / come / travel / move + <b>to</b> + place"],
+   ex:["I went <b>to</b> school.","We're flying <b>to</b> Japan.","She came <b>to</b> the party."],
+   sig:"มีกริยาบอกการเดินทาง → to",
+   warn:["<span class='ok'>go home</span> · <span class='ok'>go there</span> — ไม่ต้องมี to!","<span class='no'>go to home</span> ❌"],
+   mem:"<b>TO = ลูกศร ➡️</b> มีการเดินทางเกิดขึ้น"}],
+ tl:"ขนาดของขอบเขต\n IN  🌏 ใหญ่ที่สุด   in Thailand / in 2026\n ON  📄 กลาง        on Monday / on the table\n AT  📍 เล็กที่สุด    at 7:00 / at the door\n TO  ➡️ เคลื่อนที่    go to school"}
+};
+const UNITS=[1,2,4,5,7,8];
+
+/* ═══════════════════════ QUESTION BANK (90) ═══════════════════════ */
+const BANK=[
+/* ── UNIT 1 ── */
+{u:1,q:"She ______ to school every day.",o:["go","goes","is going","went"],a:"goes",e:"กิจวัตรประจำวัน ใช้ Present Simple และประธาน she ต้องเติม -s"},
+{u:1,q:"Listen! The baby ______ in the next room.",o:["cries","cry","is crying","cried"],a:"is crying",e:"คำว่า Listen! บอกว่ากำลังเกิดขึ้นตอนนี้ → am/is/are + V-ing"},
+{u:1,q:"I ______ this song. It's my favourite.",o:["am liking","like","likes","liking"],a:"like",e:"like เป็น stative verb บอกความรู้สึก ไม่ใช้รูป -ing"},
+{u:1,q:"Water ______ at 100 degrees Celsius.",o:["boil","is boiling","boils","boiled"],a:"boils",e:"ความจริงทั่วไป (general truth) ใช้ Present Simple"},
+{u:1,q:"My brother ______ my things without asking!",o:["is always borrowing","always is borrowing","always borrow","borrowing always"],a:"is always borrowing",e:"นิสัยน่ารำคาญ ใช้ Present Continuous + always"},
+{u:1,q:"______ you ______ TV at the moment?",o:["Do / watch","Are / watching","Is / watching","Do / watching"],a:"Are / watching",e:"at the moment = ตอนนี้ → Are + S + V-ing"},
+{u:1,q:"They ______ with their cousins until they find a flat.",o:["stay","stays","are staying","stayed"],a:"are staying",e:"สถานการณ์ชั่วคราว (temporary) ใช้ Present Continuous"},
+{u:1,q:"He ______ understand the question.",o:["isn't","don't","doesn't","not"],a:"doesn't",e:"understand เป็น stative verb + ประธาน he → doesn't + V1"},
+{u:1,q:"How often ______ she go to the gym?",o:["do","does","is","has"],a:"does",e:"How often ถามความถี่ ใช้ Present Simple, ประธาน she → does"},
+{u:1,q:"We ______ a car, so we take the bus.",o:["aren't having","don't have","doesn't have","not have"],a:"don't have",e:"have แปลว่า “มี” เป็น stative verb → don't have"},
+{u:1,q:"I ______ about changing schools these days.",o:["think","am thinking","thinks","am think"],a:"am thinking",e:"think ในความหมาย “กำลังครุ่นคิด/พิจารณา” ใช้ continuous ได้"},
+{u:1,q:"This soup ______ really delicious.",o:["is tasting","taste","tastes","tasted"],a:"tastes",e:"taste บอกรสชาติ เป็น stative verb → ใช้ Present Simple"},
+{u:1,q:"Nadine ______ work on Saturdays.",o:["isn't","doesn't","don't","not"],a:"doesn't",e:"ประธานเอกพจน์ Nadine → doesn't + V1 (work)"},
+{u:1,q:"Look! It ______ outside. Take an umbrella.",o:["rains","is raining","rain","rained"],a:"is raining",e:"Look! บ่งบอกเหตุการณ์ที่กำลังเกิดขึ้นขณะพูด"},
+{u:1,q:"Tom ______ three languages very well.",o:["is knowing","know","knows","are knowing"],a:"knows",e:"know เป็น stative verb + ประธาน Tom → knows"},
+/* ── UNIT 2 ── */
+{u:2,q:"I ______ my homework last night.",o:["do","did","have done","was doing"],a:"did",e:"last night เป็นเวลาอดีตที่ชัดเจน → Past Simple"},
+{u:2,q:"While I ______ dinner, the phone rang.",o:["cooked","was cooking","cook","have cooked"],a:"was cooking",e:"while + ฉากหลังที่กำลังดำเนินอยู่ → Past Continuous"},
+{u:2,q:"They ______ to the cinema yesterday.",o:["go","were going","went","have gone"],a:"went",e:"yesterday → Past Simple, go เป็น irregular verb → went"},
+{u:2,q:"When she was young, she ______ have very long hair.",o:["use to","used to","uses to","did use"],a:"used to",e:"used to + V1 ใช้กับสภาพในอดีตที่ไม่เป็นแบบนั้นแล้ว"},
+{u:2,q:"______ you ______ the film last week?",o:["Did / see","Did / saw","Do / see","Were / seeing"],a:"Did / see",e:"คำถาม Past Simple: Did + S + V1 (มี did แล้วกริยากลับเป็น V1)"},
+{u:2,q:"At eight o'clock last night, we ______ dinner.",o:["had","have had","were having","are having"],a:"were having",e:"ระบุจุดเวลาในอดีตว่ากำลังทำอยู่ → Past Continuous"},
+{u:2,q:"He ______ come to the party because he was ill.",o:["doesn't","didn't","wasn't","hadn't"],a:"didn't",e:"ปฏิเสธในอดีต → didn't + V1"},
+{u:2,q:"I was reading when someone ______ on the door.",o:["knocked","was knocking","knocks","had knocked"],a:"knocked",e:"เหตุการณ์สั้นที่มาแทรกฉากหลัง → Past Simple"},
+{u:2,q:"______ there ______ be a supermarket on the corner?",o:["Did / use to","Did / used to","Was / use to","Does / use to"],a:"Did / use to",e:"คำถามของ used to: Did + S + use to (ตัด d ทิ้ง)"},
+{u:2,q:"It ______ heavily, so we decided to stay at home.",o:["rained","was raining","rains","has rained"],a:"was raining",e:"บอกฉากหลัง/บรรยากาศของเรื่อง → Past Continuous"},
+{u:2,q:"Bradley is a teacher now, but he ______ want to be a train driver.",o:["used to","didn't used to","use to","didn't use to"],a:"used to",e:"เคยอยากเป็นในอดีต แต่ตอนนี้ไม่แล้ว → used to + V1"},
+{u:2,q:"What ______ you doing at midnight?",o:["was","were","did","are"],a:"were",e:"ประธาน you ใน Past Continuous ใช้ were"},
+{u:2,q:"Fifty years ago, people ______ spend as much on entertainment.",o:["don't","weren't","didn't","hadn't"],a:"didn't",e:"ข้อเท็จจริงในอดีตแบบปฏิเสธ → didn't + V1"},
+{u:2,q:"Stacy ______ her keys, so she couldn't get into the house.",o:["loses","was losing","lost","has lost"],a:"lost",e:"เหตุการณ์จบแล้วในอดีต → Past Simple (lose → lost)"},
+{u:2,q:"They ______ football when it started to snow.",o:["played","were playing","have played","play"],a:"were playing",e:"กำลังเล่นอยู่แล้วมีเหตุแทรก → Past Continuous"},
+/* ── UNIT 4 ── */
+{u:4,q:"I ______ this film already. Let's watch another one.",o:["saw","have seen","was seeing","see"],a:"have seen",e:"already เป็นสัญญาณของ Present Perfect (have/has + V3)"},
+{u:4,q:"I ______ him at the shopping centre yesterday.",o:["have seen","had seen","saw","have been seeing"],a:"saw",e:"มี yesterday = เวลาอดีตชัดเจน ห้ามใช้ Present Perfect"},
+{u:4,q:"She ______ in this company since 2020.",o:["works","worked","has worked","is working"],a:"has worked",e:"since + จุดเริ่มต้น → Present Perfect (เริ่มอดีต ต่อเนื่องถึงตอนนี้)"},
+{u:4,q:"I'm so annoyed! I ______ for the bus for 40 minutes.",o:["wait","waited","have been waiting","had waited"],a:"have been waiting",e:"เน้นระยะเวลาที่ทำต่อเนื่องจนถึงตอนนี้ → have been + V-ing"},
+{u:4,q:"We haven't decided what to buy him ______.",o:["already","yet","just","since"],a:"yet",e:"yet ใช้ท้ายประโยคปฏิเสธและคำถาม แปลว่า “ยัง...ไม่”"},
+{u:4,q:"I've known Sarah ______ ten years.",o:["since","for","in","from"],a:"for",e:"for + ช่วงระยะเวลา (ten years) / since + จุดเวลา"},
+{u:4,q:"He has never ______ sushi before.",o:["eat","ate","eaten","eating"],a:"eaten",e:"Present Perfect ใช้ V3 เสมอ (eat → ate → eaten)"},
+{u:4,q:"It's the first time I ______ to this restaurant.",o:["am","was","have been","had been"],a:"have been",e:"It's the first time ตามด้วย Present Perfect"},
+{u:4,q:"My hands are dirty because I ______ the car.",o:["have washed","have been washing","washed","wash"],a:"have been washing",e:"เน้นตัวกิจกรรมที่ทำมาจนเห็นร่องรอยตอนนี้ → continuous"},
+{u:4,q:"I ______ my room. Come and have a look!",o:["have cleaned","have been cleaning","clean","was cleaning"],a:"have cleaned",e:"เน้นผลลัพธ์ที่เสร็จสมบูรณ์ → Present Perfect Simple"},
+{u:4,q:"______ you ever ______ to Japan?",o:["Have / been","Have / gone","Did / go","Are / being"],a:"Have / been",e:"ถามประสบการณ์ใช้ have been to = เคยไปมาแล้ว"},
+{u:4,q:"John and Julie ______ their car for about a year.",o:["have","are having","have had","had"],a:"have had",e:"for about a year = ตั้งแต่อดีตถึงตอนนี้ → have + had (V3 ของ have)"},
+{u:4,q:"She's been learning Chinese ______ 2019.",o:["for","since","in","during"],a:"since",e:"since + ปี/จุดเวลาที่เริ่มต้น"},
+{u:4,q:"I ______ just ______ lunch, so I'm not hungry.",o:["have / had","had / have","am / having","have / have"],a:"have / had",e:"just + Present Perfect = เพิ่งทำไปเมื่อสักครู่"},
+{u:4,q:"How long ______ you ______ English?",o:["have / been learning","did / learn","are / learning","have / learn"],a:"have / been learning",e:"How long ถามระยะเวลาต่อเนื่อง → have been + V-ing"},
+/* ── UNIT 5 ── */
+{u:5,q:"When I arrived at the station, the train ______.",o:["left","has left","had left","was leaving"],a:"had left",e:"รถไฟออกไป “ก่อน” เราไปถึง → เหตุการณ์ที่เกิดก่อนใช้ had + V3"},
+{u:5,q:"She was exhausted because she ______ all day.",o:["worked","had been working","has worked","was working"],a:"had been working",e:"เน้นระยะเวลาของกิจกรรมก่อนจุดหนึ่งในอดีต → had been + V-ing"},
+{u:5,q:"By the time we got to the cinema, the film ______.",o:["started","had started","has started","was starting"],a:"had started",e:"By the time เป็นสัญญาณของ Past Perfect"},
+{u:5,q:"I ______ never ______ snow before I went to Japan.",o:["have / seen","had / seen","did / see","was / seeing"],a:"had / seen",e:"never ... before + เหตุการณ์ในอดีต → Past Perfect"},
+{u:5,q:"He ______ been driving for three hours when he finally stopped.",o:["has","have","had","was"],a:"had",e:"Past Perfect Continuous ใช้ had been + V-ing ทุกประธาน"},
+{u:5,q:"Their clothes were wet because it ______ heavily.",o:["rained","has rained","had been raining","was raining"],a:"had been raining",e:"อธิบายสาเหตุที่เกิดต่อเนื่องมาก่อนหน้านั้น → had been + V-ing"},
+{u:5,q:"After she ______ her dinner, she watched a DVD.",o:["had finished","has finished","finish","was finishing"],a:"had finished",e:"After + เหตุการณ์ที่เกิดก่อน → had + V3"},
+{u:5,q:"I didn't eat anything at the party because I ______ already ______ at home.",o:["have / eaten","had / eaten","did / eat","was / eating"],a:"had / eaten",e:"กินที่บ้านก่อนไปงาน = เกิดก่อนอีกเหตุการณ์ในอดีต"},
+{u:5,q:"______ you ______ about the accident before you saw it on TV?",o:["Have / heard","Did / hear","Had / heard","Were / hearing"],a:"Had / heard",e:"before + เหตุการณ์อดีต → คำถาม Past Perfect: Had + S + V3"},
+{u:5,q:"“We'd had dinner when Wendy arrived.” ประโยคนี้หมายความว่าอย่างไร?",o:["เรากินข้าวเสร็จแล้ว Wendy จึงมาถึง","Wendy มาถึงก่อน แล้วเราจึงกินข้าว","เรากินข้าวพร้อมกับ Wendy","Wendy กินข้าวคนเดียว"],a:"เรากินข้าวเสร็จแล้ว Wendy จึงมาถึง",e:"had + V3 คือเหตุการณ์ที่เกิดก่อน ดังนั้นกินข้าวเสร็จก่อน Wendy มา"},
+{u:5,q:"I was really angry because I ______ for over an hour.",o:["waited","have waited","had been waiting","was waiting"],a:"had been waiting",e:"for over an hour เน้นระยะเวลาก่อนหน้านั้น → had been waiting"},
+{u:5,q:"He couldn't get into the house because he ______ his key.",o:["loses","lost","had lost","has lost"],a:"had lost",e:"ทำกุญแจหายก่อน จึงเข้าบ้านไม่ได้ → had + V3"},
+{u:5,q:"Simon ______ just ______ the test when the bell rang.",o:["has / finished","had / finished","did / finish","was / finishing"],a:"had / finished",e:"just + Past Perfect = เพิ่งเสร็จก่อนอีกเหตุการณ์ในอดีต"},
+{u:5,q:"Mum had ______ her cup of tea before she realised it had salt in it!",o:["drunk","drank","been drinking","drink"],a:"been drinking",e:"เน้นว่ากำลังดื่มอยู่ช่วงหนึ่งก่อนจะรู้ตัว → had been drinking"},
+{u:5,q:"The girls had tidied the house before the visitors arrived. ใครมาถึงทีหลัง?",o:["The girls","The visitors","ทั้งสองพร้อมกัน","ไม่มีใครมา"],a:"The visitors",e:"had tidied เกิดก่อน → แขก (visitors) มาถึงทีหลัง"},
+/* ── UNIT 7 ── */
+{u:7,q:"Look at those black clouds! It ______.",o:["will rain","is going to rain","rains","is raining"],a:"is going to rain",e:"ทำนายจากหลักฐานที่มองเห็น → be going to"},
+{u:7,q:"The train ______ at 7:00 every morning.",o:["will leave","is leaving","leaves","is going to leave"],a:"leaves",e:"ตารางเวลาที่ตายตัว (timetable) ใช้ Present Simple"},
+{u:7,q:"I ______ meeting my teacher tomorrow at three o'clock.",o:["will","am","am going","do"],a:"am",e:"นัดหมายที่ตกลงไว้แล้ว → am/is/are + V-ing"},
+{u:7,q:"This bag is so heavy. — Don't worry, I ______ help you.",o:["am going to","will","am","would"],a:"will",e:"เสนอตัวช่วยเหลือ ณ ตอนนั้น → will"},
+{u:7,q:"I've already decided. I ______ study medicine at university.",o:["will","am going to","am","would"],a:"am going to",e:"ตั้งใจไว้ล่วงหน้าแล้ว (prior intention) → be going to"},
+{u:7,q:"______ you pass me the salt, please?",o:["Will","Are","Do","Shall"],a:"Will",e:"Will you ...? ใช้ขอร้องอย่างสุภาพ"},
+{u:7,q:"I'm sure our team ______ the match on Saturday.",o:["wins","is winning","will win","is going to winning"],a:"will win",e:"ทำนายด้วยความคิดเห็นส่วนตัว (I'm sure/I think) → will"},
+{u:7,q:"We ______ dinner with my aunt tonight. We booked a table yesterday.",o:["will have","have","are having","had"],a:"are having",e:"จองโต๊ะแล้ว = นัดหมายที่แน่นอน → Present Continuous"},
+{u:7,q:"The film ______ at 8 pm, so let's meet at 7:30.",o:["will start","starts","is going to start","started"],a:"starts",e:"รอบฉายเป็นตารางเวลา → Present Simple"},
+{u:7,q:"Don't worry, I ______ tell anyone your secret.",o:["don't","am not going","won't","will"],a:"won't",e:"สัญญาแบบปฏิเสธ → won't + V1"},
+{u:7,q:"______ I come with you to the station?",o:["Will","Shall","Do","Am"],a:"Shall",e:"Shall I ...? ใช้เสนอความช่วยเหลือ"},
+{u:7,q:"In 2050, I think people ______ on Mars.",o:["live","are living","will live","are going to living"],a:"will live",e:"ทำนายอนาคตไกล ๆ ด้วย I think → will + V1"},
+{u:7,q:"What time ______ the plane ______ in Bangkok?",o:["will / arrive","does / arrive","is / arriving","did / arrive"],a:"does / arrive",e:"ตารางบินเป็น schedule → Present Simple (does + arrive)"},
+{u:7,q:"She's bought all the textbooks. She ______ to be a doctor.",o:["will","is going","is going to try","will trying"],a:"is going to try",e:"มีหลักฐาน (ซื้อหนังสือแล้ว) + ตั้งใจไว้ → be going to"},
+{u:7,q:"I'm sure you ______ the exam. You've studied so hard.",o:["pass","will pass","are passing","are going to passing"],a:"will pass",e:"I'm sure + ทำนาย → will + V1"},
+/* ── UNIT 8 ── */
+{u:8,q:"We have an English test ______ Monday.",o:["in","on","at","to"],a:"on",e:"ชื่อวันในสัปดาห์ใช้ on เสมอ"},
+{u:8,q:"My birthday is ______ July.",o:["on","at","in","to"],a:"in",e:"ชื่อเดือนใช้ in"},
+{u:8,q:"The lesson starts ______ 8 o'clock.",o:["in","on","at","to"],a:"at",e:"เวลานาฬิกาที่เจาะจงใช้ at"},
+{u:8,q:"My sister was born ______ 2008.",o:["on","in","at","to"],a:"in",e:"ปี ค.ศ. ใช้ in"},
+{u:8,q:"Your book is ______ the table.",o:["in","at","on","to"],a:"on",e:"วางอยู่บนพื้นผิวใช้ on"},
+{u:8,q:"I can't sleep well ______ night.",o:["in","on","at","to"],a:"at",e:"at night เป็นสำนวนตายตัว (แต่ in the morning/afternoon/evening)"},
+{u:8,q:"I always drink coffee ______ the morning.",o:["at","on","in","to"],a:"in",e:"ช่วงของวันใช้ in the morning / afternoon / evening"},
+{u:8,q:"Open your books ______ page 62.",o:["in","on","at","to"],a:"on",e:"หน้าหนังสือใช้ on page ..."},
+{u:8,q:"My cousin lives ______ Bangkok.",o:["at","on","in","to"],a:"in",e:"เมืองและประเทศใช้ in"},
+{u:8,q:"I'll wait for you ______ the bus stop.",o:["in","on","at","to"],a:"at",e:"จุดนัดพบที่เจาะจงใช้ at"},
+{u:8,q:"Every morning I go ______ school by bus.",o:["at","to","in","on"],a:"to",e:"การเคลื่อนที่ไปยังสถานที่ใช้ to"},
+{u:8,q:"We always visit our grandparents ______ Christmas Day.",o:["in","at","on","to"],a:"on",e:"วันที่เจาะจง (Christmas Day) ใช้ on / แต่ช่วงเทศกาลใช้ at Christmas"},
+{u:8,q:"It often snows there ______ winter.",o:["on","at","in","to"],a:"in",e:"ฤดูกาลใช้ in"},
+{u:8,q:"What do you usually do ______ the weekend?",o:["in","on","at","to"],a:"at",e:"at the weekend เป็นรูปแบบอังกฤษบริติช"},
+{u:8,q:"They spent their holiday ______ a small island.",o:["in","at","on","to"],a:"on",e:"เกาะใช้ on an island"}
+];
+
+/* ═══════════════════════ ENGINE ═══════════════════════ */
+let student={},quiz=[],cur=0,locked=false;
+
+function go(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function enter(){
+  const n=document.getElementById('i-name').value.trim();
+  const c=document.getElementById('i-class').value;
+  const no=document.getElementById('i-no').value.trim();
+  const e=document.getElementById('err');
+  if(!n||!c||!no){e.textContent='⚠️ กรุณากรอกชื่อ–นามสกุล ชั้น และเลขที่ ให้ครบถ้วน';e.style.display='block';return}
+  e.style.display='none';
+  student={name:n,cls:c,no:no};
+  document.getElementById('hi').textContent='สวัสดีครับ '+n+' ('+c+' เลขที่ '+no+') 👋';
+  renderUnits();go('s-menu');
+}
+
+function renderUnits(){
+  document.getElementById('units').innerHTML=UNITS.map(u=>
+    `<div class="unit" onclick="openUnit(${u})">
+      <div class="unum">UNIT<br>${u}</div>
+      <div class="utext"><b>${LESSONS[u].t}</b><span>${LESSONS[u].s}</span></div>
+      <div style="margin-left:auto;color:#cbd5e1;font-size:22px">›</div>
+    </div>`).join('');
+}
+
+function openUnit(u){
+  const L=LESSONS[u];
+  let h=`<div class="hero" style="padding:28px 22px">
+    <div style="opacity:.8;font-size:14px;letter-spacing:2px">UNIT ${u}</div>
+    <h1 style="font-size:26px">${L.t}</h1>
+    <div class="sub">${L.s}</div></div>
+    <div class="card"><div class="blk b-goal"><span class="t">🎯 เป้าหมายการเรียนรู้</span>${L.goal}</div></div>`;
+  L.parts.forEach(p=>{
+    h+=`<div class="card"><h2>${p.h}</h2>
+      <div class="blk b-idea"><span class="t">🧠 THE BIG IDEA</span>${p.idea}</div>
+      <div class="blk b-form"><span class="t">🔧 GRAMMAR FORMULA</span>${p.form.map(f=>`<code>${f}</code>`).join('<br>')}</div>
+      <div class="blk b-ex"><span class="t">💬 REAL EXAMPLES</span>${p.ex.map(x=>'• '+x).join('<br>')}</div>
+      <div class="blk b-sig"><span class="t">🔎 SIGNAL WORDS</span>${p.sig}</div>
+      <div class="blk b-warn"><span class="t">🚨 WATCH OUT!</span>${p.warn.join('<br>')}</div>
+      <div class="blk b-mem"><span class="t">💡 REMEMBER THIS!</span>${p.mem}</div>
+    </div>`;
+  });
+  h+=`<div class="card"><h2>🧩 สรุปด้วยภาพ</h2><div class="tl">${L.tl}</div></div>`;
+  document.getElementById('lesson-body').innerHTML=h;
+  const i=UNITS.indexOf(u),nx=UNITS[i+1];
+  const b=document.getElementById('nextUnit');
+  if(nx){b.textContent='Unit '+nx+' →';b.onclick=()=>openUnit(nx)}
+  else{b.textContent='📝 ไปทำแบบทดสอบ';b.onclick=startTest}
+  go('s-lesson');
+}
+
+/* ── สร้างชุดข้อสอบ: สุ่ม 5 ข้อ/Unit + สลับตัวเลือก ── */
+function buildQuiz(){
+  let set=[];
+  UNITS.forEach(u=>{
+    const pool=BANK.filter(q=>q.u===u);
+    set=set.concat(shuffle(pool).slice(0,5));
+  });
+  return shuffle(set).map(q=>({...q,opts:shuffle(q.o),pick:null}));
+}
+function startTest(){
+  quiz=buildQuiz();cur=0;locked=false;
+  showQ();go('s-test');
+}
+function showQ(){
+  const q=quiz[cur];
+  document.getElementById('qnum').textContent='ข้อ '+(cur+1)+' / '+quiz.length;
+  const p=Math.round((cur+1)/quiz.length*100);
+  document.getElementById('qpct').textContent=p+'%';
+  document.getElementById('pfill').style.width=p+'%';
+  document.getElementById('qunit').textContent='Unit '+q.u+' · '+LESSONS[q.u].t;
+  document.getElementById('qtext').innerHTML=esc(q.q);
+  document.getElementById('qopts').innerHTML=q.opts.map((o,i)=>
+    `<button class="opt${q.pick===o?' sel':''}" onclick="pick(${i})">
+      <span class="k">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('');
+  document.getElementById('bPrev').disabled=cur===0;
+  document.getElementById('bNext').textContent=cur===quiz.length-1?'✅ ส่งคำตอบ':'ข้อถัดไป →';
+}
+function pick(i){quiz[cur].pick=quiz[cur].opts[i];showQ()}
+function prevQ(){if(cur>0){cur--;showQ()}}
+function nextQ(){
+  if(quiz[cur].pick===null){alert('กรุณาเลือกคำตอบก่อนครับ');return}
+  if(cur<quiz.length-1){cur++;showQ()}
+  else{
+    const miss=quiz.filter(q=>q.pick===null).length;
+    if(miss>0){alert('ยังมีข้อที่ยังไม่ได้ตอบอีก '+miss+' ข้อ');return}
+    if(locked)return;
+    if(!confirm('ยืนยันการส่งคำตอบ? เมื่อส่งแล้วจะแก้ไขไม่ได้'))return;
+    locked=true;document.getElementById('bNext').disabled=true;
+    finish();
+  }
+}
+function quitTest(){
+  if(confirm('ต้องการออกจากแบบทดสอบหรือไม่? คำตอบทั้งหมดจะหายไป'))go('s-menu');
+}
+
+function finish(){
+  const total=quiz.length;
+  let score=0;const per={};
+  UNITS.forEach(u=>per[u]={c:0,t:0});
+  quiz.forEach(q=>{per[q.u].t++;if(q.pick===q.a){score++;per[q.u].c++}});
+  const pct=Math.round(score/total*100),pass=pct>=70;
+  const strong=UNITS.filter(u=>per[u].c/per[u].t>=0.8);
+  const weak=UNITS.filter(u=>per[u].c/per[u].t<0.7);
+  const wrong=quiz.filter(q=>q.pick!==q.a);
+  const d=new Date().toLocaleString('th-TH',{dateStyle:'long',timeStyle:'short'});
+
+  let h=`<div class="score${pass?'':' fail'}" style="margin-top:20px">
+    <div style="font-size:15px;opacity:.9">🎓 ผลการทดสอบ Grammar M.4</div>
+    <div class="big">${score}<span style="font-size:26px;opacity:.7"> / ${total}</span></div>
+    <div class="pct">${pct}%</div>
+    <div class="badge">${pass?'🏆 PASSED — ผ่านเกณฑ์':'💪 NOT YET — ลองใหม่อีกครั้ง'}</div>
+  </div>
+
+  <div class="idcard">
+    <div><span>ชื่อ–นามสกุล</span><b>${esc(student.name)}</b></div>
+    <div><span>ชั้น</span><b>${esc(student.cls)}</b></div>
+    <div><span>เลขที่</span><b>${esc(student.no)}</b></div>
+    <div><span>คะแนน</span><b>${score} / ${total} (${pct}%)</b></div>
+    <div><span>สถานะ</span><b>${pass?'ผ่าน':'ไม่ผ่าน'}</b></div>
+    <div><span>วันที่ทำ</span><b>${d}</b></div>
+  </div>
+
+  <div class="card"><h2>📊 คะแนนรายหน่วย</h2>
+  <table><tr><th>Unit</th><th>หัวข้อ</th><th>คะแนน</th><th style="width:90px">กราฟ</th></tr>`;
+  UNITS.forEach(u=>{
+    const r=Math.round(per[u].c/per[u].t*100);
+    const col=r>=80?'#16a34a':r>=70?'#f59e0b':'#dc2626';
+    h+=`<tr><td><b>${u}</b></td><td style="font-size:13px">${LESSONS[u].t}</td>
+    <td><b style="color:${col}">${per[u].c}/${per[u].t}</b> <span style="font-size:12px;color:#64748b">(${r}%)</span></td>
+    <td><div class="mini"><i style="width:${r}%;background:${col}"></i></div></td></tr>`;
+  });
+  h+=`</table></div>
+
+  <div class="card">
+    <div class="blk b-ex"><span class="t">💪 จุดแข็งของนักเรียน</span>
+      ${strong.length?strong.map(u=>'✅ Unit '+u+' — '+LESSONS[u].t).join('<br>'):'ยังไม่มีหน่วยที่ได้ 80% ขึ้นไป ลองทบทวนแล้วทำใหม่อีกครั้งนะครับ'}</div>
+    <div class="blk b-warn"><span class="t">🎯 ควรทบทวนเพิ่มเติม</span>
+      ${weak.length?weak.map(u=>'📖 Unit '+u+' — '+LESSONS[u].t+' ('+LESSONS[u].s+')').join('<br>'):'เยี่ยมมาก! ทำได้ดีทุกหน่วย ไม่มีจุดที่ต้องซ่อม 🎉'}</div>
+  </div>`;
+
+  if(wrong.length){
+    h+=`<div class="card"><h2>❌ ทบทวนข้อที่ตอบผิด (${wrong.length} ข้อ)</h2>
+    <p class="lead">อ่านคำอธิบายแล้วกลับไปทบทวน Unit ที่เกี่ยวข้องนะครับ</p>`;
+    wrong.forEach(q=>{
+      h+=`<div class="rev"><span class="pill">Unit ${q.u}</span>
+        <div class="q">${esc(q.q)}</div>
+        <div class="a">❌ ตอบ: <span style="color:#dc2626">${esc(q.pick)}</span></div>
+        <div class="a">✅ เฉลย: <b style="color:#16a34a">${esc(q.a)}</b></div>
+        <div class="a" style="color:#475569;margin-top:6px">💡 ${esc(q.e)}</div></div>`;
+    });
+    h+=`</div>`;
+  }else{
+    h+=`<div class="card" style="text-align:center;background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff;border:none">
+      <h2 style="color:#fff">🎉 PERFECT SCORE!</h2><p>ตอบถูกทุกข้อ เก่งมากครับ</p></div>`;
+  }
+
+  h+=`<div class="card noprint">
+    <h2>📤 ส่งผลให้คุณครู</h2>
+    <p class="lead">กดคัดลอกผลสอบแล้ววางส่งในไลน์กลุ่ม หรือบันทึกเป็น PDF ส่งครูได้เลย</p>
+    <button class="btn btn-dark" onclick="copyResult(${score},${total},${pct},'${pass?'ผ่าน':'ไม่ผ่าน'}')">📋 คัดลอกผลสอบ</button>
+    <button class="btn btn-ghost" onclick="window.print()">🖨️ บันทึกเป็น PDF / พิมพ์</button>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="go('s-menu')">📚 กลับไปอ่านบทเรียน</button>
+      <button class="btn btn-primary" onclick="startTest()">🔄 ทำชุดใหม่</button>
+    </div>
+  </div>
+  <div class="foot">Grammar M.4 Smart Learning Lab · ชุดข้อสอบสุ่มใหม่ทุกครั้งที่ทำ</div>`;
+
+  document.getElementById('result-body').innerHTML=h;
+  go('s-result');
+}
+
+function copyResult(s,t,p,st){
+  const txt=`🎓 ผลทดสอบ Grammar M.4\nชื่อ: ${student.name}\nชั้น: ${student.cls}\nเลขที่: ${student.no}\nคะแนน: ${s}/${t} (${p}%)\nสถานะ: ${st}\nวันที่: ${new Date().toLocaleString('th-TH')}`;
+  navigator.clipboard.writeText(txt).then(()=>alert('✅ คัดลอกแล้ว! นำไปวางส่งคุณครูได้เลย'))
+  .catch(()=>prompt('คัดลอกข้อความนี้:',txt));
+}
+
+window.addEventListener('beforeunload',e=>{
+  if(document.getElementById('s-test').classList.contains('active')&&!locked){
+    e.preventDefault();e.returnValue='';
+  }
+});
+</script>
+</body>
+</html>
